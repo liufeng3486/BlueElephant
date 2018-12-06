@@ -11,3 +11,15 @@ Python3.5.3+
 .. figure:: _static/screenshots/1.png
     :align: center
 222
+
+Table of Contents
+-----------------
+
+.. toctree::
+
+   markup
+   options
+   methods
+   events
+   keyboard
+   i18n
