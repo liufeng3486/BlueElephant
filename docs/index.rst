@@ -8,11 +8,20 @@ BlueTest
 * `Python`_ 3.5.3+
 * `Request`_ 2.0.0+
 
+Python下载路径``https://www.python.org/downloads/``
+Request下载路径``https://pypi.org/project/requests/`` or 使用pip命令 ``pip install requests``
 
-.. figure:: _static/screenshots/1.png
-    :align: center
-222
-555
+安装
+------------
+最简单的安装方式就是使用``pip``命令，作为一个pythoner,``pip``是必备工具之一
+
+.. code-block:: html
+pip install BlueTest
+or
+pip3 install BlueTest
+
+
+
 Table of Contents
 -----------------
 
