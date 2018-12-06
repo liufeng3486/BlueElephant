@@ -1,3 +1,6 @@
 ApiTest
 =======
-The following are examples of supported markup. On their own, these will not provide a datepicker widget; you will need to instantiate the datepicker on the markup.
+接口测试，是这个测试脚手架被搭建的初衷。所以代码的没有做到小而美。
+
+
+
