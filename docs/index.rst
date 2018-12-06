@@ -7,3 +7,6 @@ BlueTest
 ------------
 
 Python3.5.3+
+
+.. figure:: _static/screenshots/markup_input.png
+    :align: center
