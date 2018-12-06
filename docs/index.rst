@@ -8,8 +8,8 @@ BlueTest
 * `Python`_ 3.5.3+
 * `Request`_ 2.0.0+
 
-Python下载路径``https://www.python.org/downloads/``
-Request下载路径``https://pypi.org/project/requests/`` or 使用pip命令 ``pip install requests``
+Python下载路径 ``https://www.python.org/downloads/`` 
+Request下载路径 ``https://pypi.org/project/requests/``  or 使用pip命令 ``pip install requests``
 
 安装
 ------------
