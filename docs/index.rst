@@ -61,16 +61,19 @@ Request下载路径 ``https://pypi.org/project/requests/``  or 使用pip命令 `
 
 test.py测试脚本，请自行创建
  ``log`` ， ``result``  ， ``srcdata`` 3个目录由BlueTest自行生成，用户无需关心
-  ``log`` 日志文件夹， 
+  ``log`` 日志文件夹，
+  
    * ``all.log`` 全部日志，隔天会自动重建并归档，
    * ``error.log`` 错误日志
  
-  ``result`` 执行结果文件夹，  
+  ``result`` 执行结果文件夹
+
   * ``data.txt`` 接口基本测试结果,   
   * ``Press_x.txt`` 压力测试原始数据 ,  
   * ``resualt.csv``  ``time.csv`` 压力测试统计后结果
   
    ``srcdata`` 测试入口数据   
+
   * ``test.json.postman....`` POSTMAN导出文件 使用BluetTest.test()会自动创建一个demo，正式使用时需要用户自行添加
   * ``test.csv`` 根据 ``test.json.postman....`` 生成的中间文件
  
