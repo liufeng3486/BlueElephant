@@ -1,4 +1,4 @@
-Test Index
+BlueTest教程
 ====================
 En TEST
 Zh 中文
