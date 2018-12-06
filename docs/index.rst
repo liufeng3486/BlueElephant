@@ -41,7 +41,7 @@ Table of Contents
 -----------------
 .. toctree::
    ApiTest 
-   options
+   Markup
    methods
    events
    keyboard
