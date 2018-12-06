@@ -15,6 +15,8 @@ Request下载路径``https://pypi.org/project/requests/`` or 使用pip命令 ``p
 ------------
 最简单的安装方式就是使用``pip``命令，作为一个pythoner,``pip``是必备工具之一
 
+.. code-block:: html
+
     pip install BlueTest 
     pip3 install BlueTest # 双python环境 python3 pip   
 
