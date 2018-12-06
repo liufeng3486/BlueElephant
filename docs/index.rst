@@ -16,7 +16,7 @@ Table of Contents
 -----------------
 
 .. toctree::
-
+Markup
    markup
    options
    methods
