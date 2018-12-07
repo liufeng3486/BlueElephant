@@ -96,12 +96,12 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
 在这两个标志位以内就是一个测试用例，在这两个标志位以外的区域可以任由大家进行备注，而不影响测试用例。也算是在可读性和易读性之间的一种平衡。以上的工作搞定之后，如果你幸运的没有出现异常，那么测试数据的准备工作已经全部完成了
 
 接口测试
-====
+------
 由于每个人，每个部门，每个公司的业务需求千奇百怪，所以，作为一个通用性的库。故我们暂时不考虑这些特性的东西。先把共性的问题解决。比如 ``值为空`` ``键值均为空`` ``额外参数校验`` ``参数长度校验`` 
 
  `bluetest` 对以上功能均做到了一键式的执行。改点配置，执行，你就能获得一堆漂亮(啰嗦)的测试数据。使用者的工作，就从一个一个机械化的填异常参数，变成了只要点一下。
  
- 如果进行测试，如何配置这些东西呢？我们一步一步来。
+ 如何进行测试，如何配置这些东西呢？我们一步一步来。
  
  * 首先确保数据准备好了，有一个生成的csv文件
  * 然后执行以下语句
@@ -120,8 +120,54 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
 收起你一脸蒙蔽的表情，没错。做完了。整理数据，去发测试报告吧！但是如何执行的，你肯定很好奇。我们再次一步一步来。
 
 
+**testByCsvData**
 
+依据 ``csv`` 数据进行测试，一堆入参的含义就不赘述了。它的主要工作其实和 `initPostMan` 很相似。主要做的是入参标准化。之后实例化了 ``Class Csv2Dict`` ，``class Dict2Py``  和 ``class ApiTest`` 
 
+**Csv2Dict**
+这是又一次做序列化的工作了。这次是把标准的中间文件 ``csv`` 处理为使用起来最舒服的字典类型。
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>>csv2dict = BlueTest.Csv2Dict("./srcdata/test.csv").run()
+    >>>for key,value in csv2dict[0].items():
+    >>>    print (key,":",value)
+    - DEBUG: CSV文件内容utf8序列化失败重试:'utf-8' codec can't decode ...
+    - DEBUG: CSV文件内容序列化成功:[{'Lv': ''....
+    Lv : 
+    Cname : 
+    Name : log
+    Describe : testapi
+    ResualPath : ./api/log
+    Method : POST
+    Url : https://www.test.com/action/api/log
+    Headers : {'Origin': 'https://www.TEST.net', 'User...
+    Data : {"date":"2018-11-04 10:21:06","action...
+    DataType : raw
+    UrlParams : {'requestID': 'Abac6b...
+    TestType : 
+    
+以上是一个完整的测试数据，部分空的内容，是预留给你使用的，当然，理想的情况是不使用。那就说明， `bluetest` 已经满足你的需求了。
+
+**Dict2Py**
+
+大家在使用 ``postman`` 的时候，应该玩过 ``Generate Code`` 这个漂亮的功能，可以将内容一键转为各种你需要的语言代码。一个很好，很实用的功能。所以，我们很谦虚（无耻）的兼容（抄袭）了这个功能。这个类就是做这件事情的。
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>>csv2dict = BlueTest.Csv2Dict("./srcdata/test.csv").run()
+    >>>BlueTest.dict2Py(data = csv2dict[0]).mkpy()
+    
+执行后，我们获得了 ``./result/api/log.py`` 可以发现地址和上面的某一条 ↓↓
+ .. code-block:: python
+ 
+    ResualPath : ./api/log
+    
+一致。所以大家不用担心，自己的生成的文件会被推在一起，造成困扰。
+    
+    
 
 
 
