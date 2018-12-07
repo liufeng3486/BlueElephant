@@ -50,6 +50,7 @@ DetailedSteps
 result_path 不建议填写，不填写，会直接在 ``./srcdata/``  文件生成与数据源同名的文件，例test.json.postman_collection-> test.csv
 
 initPostMan是如何工作的呢？
+
 它的主要工作其实其实是进行文件名处理。除此以外的大部分功能其实是由我们一个类 `Class Postman2Csv` 来处理的。
 
 首先initPostMan会将不确定的文件名（缩写，完整路径，绝对路径等） 进行处理后，变为标准格式后。将工作交于 `Class Postman2Csv` 。
@@ -82,6 +83,38 @@ PostMan文件转换为Csv所使用的类。除了一大堆为了处理各种各�
 
 揉捏好的数据，按照约定，我们将它们变成 ``csv`` 格式。这就使用到了下一个函数。
 
+
+.. code-block:: python
+
+    postman2csv.write2Csv(data)   
+    
+write2Csv == write to csv 。如果你还看不明白含义，那么不是你的英文太好。就是中文不太好。 ``写入文件为csv格式`` 
+
+除了枯燥的将之前我们生成的漂亮数组 ``data`` 一条一条写入文件外。还增加了一些标志。用来加强可读性。
+
+.. figure:: _static/screenshots/dtailedsteps_csv.png
+    :align: center
+
+从上图可以看出，除了一行比较啰嗦的title以外，主要的标志有： ``START`` , ``END`` 
+
+这两个标志位是用来规定每个测试用例的范围。
+
+在这两个标志位以内就是一个测试用例，在这两个标志位以外的区域可以任由大家进行备注，而不影响测试用例。也算是在可读性和易读性之间的一种平衡。
+
+以上的所有工作做完之后。我们就从一个 ``.postman_collection`` 文件（也可以是 ``swagger`` ``YAPI`` ）转换为了 ``.csv`` 文件。
+
+数据准备的第一步就此完成。请记住以上这么啰嗦的步骤，在使用时，在大部分情况下，都是以下一句话：
+
+.. code-block:: python
+
+    BlueTest.initPostMan(“数据源名称”)
+    
+
+接口测试 
+------
+
+在准备好数据后，我们就要开始正式的测试执行了。对于接口测试。最繁琐，而且最应该脚本化的就是，接口的基础测试。
+包括 ``
 
 
 
