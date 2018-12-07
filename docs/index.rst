@@ -9,6 +9,7 @@ BlueTest
 * `Request`_ 2.0.0+
 
 Python下载路径 ``https://www.python.org/downloads/`` 
+
 Request下载路径 ``https://pypi.org/project/requests/``  or 使用pip命令 ``pip install requests``
 
 安装
@@ -37,6 +38,7 @@ Request下载路径 ``https://pypi.org/project/requests/``  or 使用pip命令 `
 -------------------
 至此，你已经完成了自动化测试从0-1的壮举。
 
+
 项目结构
 ------------
 
@@ -60,6 +62,7 @@ Request下载路径 ``https://pypi.org/project/requests/``  or 使用pip命令 `
             test.json.postman_collection
 
 test.py测试脚本，请自行创建
+
  ``log`` ， ``result``  ， ``srcdata`` 3个目录由BlueTest自行生成，用户无需关心
   ``log`` 日志文件夹，
   
@@ -77,7 +80,7 @@ test.py测试脚本，请自行创建
   * ``test.json.postman....`` POSTMAN导出文件 使用BluetTest.test()会自动创建一个demo，正式使用时需要用户自行添加
   * ``test.csv`` 根据 ``test.json.postman....`` 生成的中间文件
  
-
+*PS:之所以使用csv格式为转换和统计压力测试结果，是为了兼容不同的操作系统。而且便于后期的图表生成*
 
 Table of Contents
 -----------------
