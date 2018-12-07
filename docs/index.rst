@@ -85,8 +85,8 @@ test.py测试脚本，请自行创建
 Table of Contents
 -----------------
 .. toctree::
-   ApiTest 
-   DetailMethod
+   Quickstart 
+   DetailedSteps
    Markup
    methods
    events
