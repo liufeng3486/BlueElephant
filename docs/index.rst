@@ -87,6 +87,7 @@ Table of Contents
 .. toctree::
    Quickstart 
    DetailedSteps
+   测试
    Markup
    methods
    events
