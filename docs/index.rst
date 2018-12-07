@@ -86,6 +86,7 @@ Table of Contents
 -----------------
 .. toctree::
    ApiTest 
+   DetailMethod
    Markup
    methods
    events
