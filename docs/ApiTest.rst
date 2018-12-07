@@ -6,7 +6,8 @@ ApiTest
 范例
 ------
 **接口基础测试**
-`` postman_collection``  测试数据放置于 `` ./srcdata/``   目录中
+
+``postman_collection``  测试数据放置于 ``./srcdata/``   目录中
 
 .. code-block:: python
 
@@ -42,6 +43,7 @@ ApiTest
     >>>  ...
 
 **接口压力测试Demo2**
+
 区别于Demo1的地方在于这个例子使用到了由 ``postman->csv`` 的文件。将压力测试与接口测试的数据耦合到一起，可以实现统一管理。
 
 .. code-block:: python
