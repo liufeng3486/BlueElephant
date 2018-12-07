@@ -95,6 +95,12 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
 .. figure:: _static/screenshots/dtailedsteps_csv.png
     :align: center
 
+从上图可以看出，除了一行比较啰嗦的title以外，主要的标志有： ``START`` , ``END`` 
+
+这两个标志位是用来规定每个测试用例的范围。
+
+在这两个标志位以内就是一个测试用例，在这两个标志位以外的区域可以任由大家进行备注，而不影响测试用例。
+
 
 
 
