@@ -161,13 +161,96 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
     >>>BlueTest.dict2Py(data = csv2dict[0]).mkpy()
     
 执行后，我们获得了 ``./result/api/log.py`` 可以发现地址和上面的某一条 ↓↓
+
  .. code-block:: python
  
     ResualPath : ./api/log
     
-一致。所以大家不用担心，自己的生成的文件会被推在一起，造成困扰。
+↑↑ 一致。所以大家不用担心，自己的生成的文件会被推在一起，造成困扰。
+    
+**ApiTest**
+
+接口测试的基类
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>>apitest = BlueTest.ApiTest(data)
+    
+还是一样，从csv里抽一条数据作为入参，来实例化基类。在基类的构造函数来里可以看到，里面对接口的一些测试标准进行了配置。，而且一切的初始化都是基于 ``param.py`` ,详细的配置内容，请自行查看相关文件。
+
+在实例化获得 ``apitest`` 后，众所周知，构造函数已经运行了。这个时候。我们的数据准备已经完成。
+执行具体的接口校验工作的方法有 ``limitCheck`` (长度校验) ``exceptionCheck`` (空校验) ``extrasCheck`` (额外参数校验)。
+校验的执行方式如下：
+
+ .. code-block:: python
+    
+    >>>csv2dict = BlueTest.Csv2Dict("./srcdata/test.csv").run()   
+    >>>apitest.dataReduction(csv2dict[0])   #正常用法
+    >>>apitest.dataReduction(csv2dict[0],limitcheck=True,extras_check=True)   #进行部分校验的用法
+    
+至此。接口测试的活干完了。之后就是结果分析和统计了。相关内容将在结果分析相关章节里进行叙述。
+为了便于大家使用。接口基础测试的完整代码如下:
+
+ .. code-block:: python
+    
+    >>>#确保该路径下，存在该文件 ./srcdata/test.json.postman_collection
+    >>>BlueTest.initPostMan("test")       #数据准备 
+    >>>BlueTest.testByCsvData("test")     #测试执行
+    
+压力测试
+------
+关于接口，除了日常的接口测试外，还有时常遇到的压力测试。由于现在更多的服务器在云端，而且各个云服务提供商，都有非常好的系统/应用监控系统。故，我们暂时跳过了服务器的监听。这些，大家只要根据时间戳，找运维拉数据就行。大家也不用痛苦的在服务器上安装JmeterPlugins之类的工具来监听了。毕竟专业的事情交给专业的人，这样才能提高效率和更好的做好自己本职的工作。世上从来不存在高大全的系统。也不存在完美的人。
+
+还是先来几个例子：
+
+**Demo1**
+
+ .. code-block:: python
+    
+    >>>import BlueTest,random
+    >>>class PressTest(BlueTest.SoloPress):
+            def runcase(self):
+                response = random.choice(["成功","失败"])
+                self.file_write(str(self.num), response, BlueTest.toolbox.responseAssert(response))
+
+**Demo2**
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>> csv_data = BlueTest.Csv2Dict(path="./srcdata/test.csv").run()
+        apitest = BlueTest.apiTest(csv_data[0])
+        class PressTest(BlueTest.SoloPress):
+            def runcase(self):
+                response = apitest.soloRequest()
+                self.file_write(str(self.num),response,b.responseAssert(response))
+        press= BlueTest.Press(2)
+        press.run(PressTest)
+        press.dataReduction()
+        
+**Demo3**
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>> temp = ["id1", "id2", "id3"]
+        apitest = BlueTest.apiTest(csv_data[0])
+        class PressTest(BlueTest.SoloPress):
+            def setup(self):
+                self.num = temp[self.index-1]
+            def runcase(self):
+                apitest.
+                response = apitest.soloRequest()
+                self.file_write(str(self.num),response,b.responseAssert(response))
+        press= BlueTest.Press(3)
+        press.run(PressTest)
+        press.dataReduction()
+                
     
     
+
+
 
 
 
