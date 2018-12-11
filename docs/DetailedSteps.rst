@@ -297,6 +297,7 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
  ``resualt.csv``
 
 .. figure:: _static/screenshots/dtailedsteps_resualtcsv.png
+
     :align: center
  
  时间轴变成了秒，并增加了成功与失败的统计。
