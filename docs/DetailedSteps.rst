@@ -271,7 +271,7 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
  
  大家可以理解为，这是一个多线程的盒子，它自动生成多线程（我们最讨厌的东西）。实例化这个类的时候。就直接确定了，产生的线程数
  
-  .. code-block:: python
+.. code-block:: python
     
     >>>import BlueTest
     >>>BlueTest.Press(线程数)
@@ -281,7 +281,7 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
  **function dataReduction**
  
  这是 ``Class Press`` 中用来进行数据整理的方法。入参默认不填，或者填入你的压测结果路径 ``Press_press.log``。
- 数据是经过三个维度进行的整理:
+ 数据是基于三个维度进行的整理:
 * 自然时间流失过程中，接口请求的效率
 * 所有请求的耗时
 * 请求的成功率
@@ -299,9 +299,40 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
   … figure:: _static/screenshots/dtailedsteps_resualtcsv.png
 :align: center
  
- 1
-
+ 时间轴变成了秒，并增加了成功与失败的统计。
  
+在不进行调优的情况下，作为客户端可以看到的大部分内容，都已经包含在 ``resualt`` 和 ``time`` 中。服务端的数据，大家可以根据 ``resualt.csv`` 中的时间戳，从监控系统中获取相关服务端状态和日志。当然，建议大家还是骚扰相关管理员或者运维来获取相关内容。
+
+**function run**
+作为 ``Class Press`` 中的主执行函数，它的入参比较特别，是一个类 ``Class SoloPress`` 。具体这个类是做什么我们稍后再讨论，先假设，我们已经有这么一个类了。让我们看一下 ``function run`` 究竟干什么了。
+
+ .. code-block:: python
+    
+    >>>def run(self,solopress):
+            ThreadList = []
+            lock = threading.Lock()
+            for i in range(1, self.num+1):
+                t = solopress(lock,i)
+                t.setup()
+                ThreadList.append(t)
+            for t in ThreadList:
+                self.runSleep()
+                t.start()
+            for t in ThreadList:
+                t.join()
+
+代码很短，而且很常见，简单来说。就是根据线程数　``self.num`` 来新建线程，并运行他们。关于 ``threading.Lock()`` 的相关内容就不再这里说了。毕竟，锁是一个很复杂的东西。
+
+简单的总结一下 ``Class Press`` 就有一个用来新建多线程，执行。并最后进行数据整理的类。
+下面介绍下，出现了好几次的 ``Class SoloPress`` 。
+
+**Class SoloPress**
+从所继承的父类可以看出来 ``Class Press`` 继承的是object。 ``Class SoloPress``继承的是 threading.Thread。由此也可以看到，SoloPress与多线程相关，所以继承了线程控制类。按照正常的使用方法。我们需要重写部分函数函数:数据准备函数 ``function setup`` ，单次执行函数 ``funciton runCase`` 。这里要介绍的不是这些注定要被大家重写的函数。如果想了解用法请看上面的DEMO。而是主要介绍一下 ``Class SoloPress`` 本身为用户做了什么事。
+
+**function run** 
+按照正常情况，run函数是类实例化后的主执行函数。所以在这里。我们做了单线程的接口调用。除了执行规定次数的 ``runCase`` 外，还进行了一些其他辅助类的工作，比如:线程执行的进度展示，执行数据的记录... 听上去是一些无关紧要的东西。但是却能提高很多用户体验，毕竟，谁也不想执行代码后，只能经过一段没有进度的等待，获得一堆没有规划好的数据。
+
+
 
 
                 
