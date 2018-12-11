@@ -288,9 +288,18 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
 
 为了便于统计和整理。我们将原始数据里的毫秒级数据整合成了秒级的数据（请求耗时除外）。并且输出位表格格式 ``time.csv`` ，``resualt.csv``
  ``time.csv``
- … figure:: _static/screenshots/dtailedsteps_csv.png
+ 
+ … figure:: _static/screenshots/dtailedsteps_timecsv.png
 :align: center
 
+可以看到，左侧是根据请求耗时（毫秒）对请求进行的统计。当然，图中右边的图表需要大家使用excel手动生成。
+
+ ``resualt.csv``
+ 
+  … figure:: _static/screenshots/dtailedsteps_resualtcsv.png
+:align: center
+ 
+ 1
 
  
 
