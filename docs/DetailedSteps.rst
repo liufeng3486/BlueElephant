@@ -34,7 +34,7 @@ DetailedSteps
 
     BlueTest.initPostMan(name,result_path = "")
     
-**initPostMan**
+**function initPostMan**
     
 
 我们的一贯命名方式就是，中国式英语 - 命名风格。
@@ -60,7 +60,7 @@ initPostMan是如何工作的呢？
     postman2csv = BlueTest.Postman2Csv(path,result_path="")
     postman2csv.run()
     
-**Postman2Csv**
+**Class Postman2Csv**
 
 PostMan文件转换为Csv所使用的类。除了一大堆为了处理各种各样奇怪情况的代码以外。主要的进行工作的函数有:
 
@@ -120,11 +120,11 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
 收起你一脸蒙蔽的表情，没错。做完了。整理数据，去发测试报告吧！但是如何执行的，你肯定很好奇。我们再次一步一步来。
 
 
-**testByCsvData**
+**function testByCsvData**
 
 依据 ``csv`` 数据进行测试，一堆入参的含义就不赘述了。它的主要工作其实和 `initPostMan` 很相似。主要做的是入参标准化。之后实例化了 ``Class Csv2Dict`` ，``class Dict2Py``  和 ``class ApiTest`` 
 
-**Csv2Dict**
+**Class Csv2Dict**
 这是又一次做序列化的工作了。这次是把标准的中间文件 ``csv`` 处理为使用起来最舒服的字典类型。
 
  .. code-block:: python
@@ -150,7 +150,7 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
     
 以上是一个完整的测试数据，部分空的内容，是预留给你使用的，当然，理想的情况是不使用。那就说明， `bluetest` 已经满足你的需求了。
 
-**Dict2Py**
+**Class Dict2Py**
 
 大家在使用 ``postman`` 的时候，应该玩过 ``Generate Code`` 这个漂亮的功能，可以将内容一键转为各种你需要的语言代码。一个很好，很实用的功能。所以，我们很谦虚（无耻）的兼容（抄袭）了这个功能。这个类就是做这件事情的。
 
@@ -168,7 +168,7 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
     
 ↑↑ 一致。所以大家不用担心，自己的生成的文件会被推在一起，造成困扰。
     
-**ApiTest**
+**Class ApiTest**
 
 接口测试的基类
 
@@ -213,6 +213,9 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
             def runcase(self):
                 response = random.choice(["成功","失败"])
                 self.file_write(str(self.num), response, BlueTest.toolbox.responseAssert(response))
+        press= BlueTest.Press(2) #线程数
+        press.run(PressTest)
+        press.dataReduction()
 
 **Demo2**
 
@@ -225,7 +228,7 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
             def runcase(self):
                 response = apitest.soloRequest()
                 self.file_write(str(self.num),response,b.responseAssert(response))
-        press= BlueTest.Press(2)
+        press= BlueTest.Press(2) #线程数
         press.run(PressTest)
         press.dataReduction()
         
@@ -234,18 +237,64 @@ write2Csv = =  write to csv 。如果你还看不明白含义，那么不是你�
  .. code-block:: python
     
     >>>import BlueTest
-    >>> temp = ["id1", "id2", "id3"]
+    >>> temp = ["id1", "id2", "id3"]   #①
         apitest = BlueTest.apiTest(csv_data[0])
         class PressTest(BlueTest.SoloPress):
             def setup(self):
-                self.num = temp[self.index-1]
+                self.num = temp[self.index-1] #②
             def runcase(self):
-                apitest.
+                apitest.data[BlueTest.csv_parm.DATA]["ID"] = self.num #③
                 response = apitest.soloRequest()
                 self.file_write(str(self.num),response,b.responseAssert(response))
-        press= BlueTest.Press(3)
+        press= BlueTest.Press(3) #线程数
         press.run(PressTest)
         press.dataReduction()
+        
+如果大家耐得住性子的话，会看出。这三个例子明显的区别。 ``Demo1`` 使用的是随机生成的假数据。 ``Demo2`` 使用的是csv里的第一个接口的数据 ``Demo3`` 在 ``Demo2`` 的基础上，增加了一些自定义参数。
+
+从实际使用的角度而言， ``Demo3`` 是我们再实际工作中最常使用到的。除了大部分的模板式代码以外。其实需要手动编写的主要部分是自定义数据的部分。
+全部的代码大概3行。 ① 数据初始化 ，②  线程获初始化据数，  ③    执行前，赋值。  
+
+Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关的demo 
+
+ .. code-block:: python
+    
+    >>>import BlueTest
+    >>>BlueTest.presstest()
+    >>>BlueTest.pressTestByCsv()
+    
+ ``presstest()`` 执行肯定不会出现问题的，因为数据是我们随机生成的。但是 ``pressTestByCsv()`` 如果出问题的话.....放心，不会是大问题，耐心点
+ 
+ Demo说完，我们开始一步一步介绍，到底是如何工作的
+ 
+ **Class Press**
+ 
+ 大家可以理解为，这是一个多线程的盒子，它自动生成多线程（我们最讨厌的东西）。实例化这个类的时候。就直接确定了，产生的线程数
+ 
+  .. code-block:: python
+    
+    >>>import BlueTest
+    >>>BlueTest.Press(线程数)
+ 
+ 除此之外，压力测试最重要的一点就是对执行数据的整理，因为这才是我们需要的。这才是最后测试报告里需要体现的内容。为此我们写了一个方法 ``dataReduction``
+ 
+ **function dataReduction**
+ 
+ 这是 ``Class Press`` 中用来进行数据整理的方法。入参默认不填，或者填入你的压测结果路径 ``Press_press.log``。
+ 数据是经过三个维度进行的整理:
+* 自然时间流失过程中，接口请求的效率
+* 所有请求的耗时
+* 请求的成功率
+
+为了便于统计和整理。我们将原始数据里的毫秒级数据整合成了秒级的数据（请求耗时除外）。并且输出位表格格式 ``time.csv`` ，``resualt.csv``
+ ``time.csv``
+ … figure:: _static/screenshots/dtailedsteps_csv.png
+:align: center
+
+
+ 
+
+
                 
     
     
