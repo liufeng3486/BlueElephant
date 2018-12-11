@@ -327,9 +327,11 @@ Demo大家看到了。除此以外， `BlueTest` 里，也自带了两个相关�
 下面介绍下，出现了好几次的 ``Class SoloPress`` 。
 
 **Class SoloPress**
-从所继承的父类可以看出来 ``Class Press`` 继承的是object。 ``Class SoloPress``继承的是 threading.Thread。由此也可以看到，SoloPress与多线程相关，所以继承了线程控制类。按照正常的使用方法。我们需要重写部分函数函数:数据准备函数 ``function setup`` ，单次执行函数 ``funciton runCase`` 。这里要介绍的不是这些注定要被大家重写的函数。如果想了解用法请看上面的DEMO。而是主要介绍一下 ``Class SoloPress`` 本身为用户做了什么事。
+
+从所继承的父类可以看出来 ``Class Press`` 继承的是object。 ``Class SoloPress`` 继承的是 threading.Thread。由此也可以看到，SoloPress与多线程相关，所以继承了线程控制类。按照正常的使用方法。我们需要重写部分函数函数:数据准备函数 ``function setup`` ，单次执行函数 ``funciton runCase`` 。这里要介绍的不是这些注定要被大家重写的函数。如果想了解用法请看上面的DEMO。而是主要介绍一下 ``Class SoloPress`` 本身为用户做了什么事。
 
 **function run** 
+
 按照正常情况，run函数是类实例化后的主执行函数。所以在这里。我们做了单线程的接口调用。除了执行规定次数的 ``runCase`` 外，还进行了一些其他辅助类的工作，比如:线程执行的进度展示，执行数据的记录... 听上去是一些无关紧要的东西。但是却能提高很多用户体验，毕竟，谁也不想执行代码后，只能经过一段没有进度的等待，获得一堆没有规划好的数据。
 
 
